@@ -1,6 +1,8 @@
 #!/bin/bash
 
-ServerSize="$(yq e '.server | length' server.yaml)"
+ServerPath=~/.momo/server.yaml
+
+ServerSize="$(yq e '.server | length' $ServerPath)"
 
 ServerSize=$[$ServerSize-1]
 
@@ -9,7 +11,7 @@ set i 0
 for i in $( seq 0 $ServerSize )
 do
 
-echo  "$i -> $(yq e '.server['$i'].name' server.yaml)"
+echo  "$i -> $(yq e '.server['$i'].name' $ServerPath)"
 
 done
 
@@ -17,12 +19,12 @@ read index
 
 if [ $index != "" ]
 then
-	name="$(yq e '.server['$index'].name' server.yaml)"
+	name="$(yq e '.server['$index'].name' $ServerPath)"
 	echo "login to $name"
-	host="$(yq e '.server['$index'].host' server.yaml)"
-	port="$(yq e '.server['$index'].port' server.yaml)"
-	user="$(yq e '.server['$index'].user' server.yaml)"
-	password="$(yq e '.server['$index'].pwd' server.yaml)"
+	host="$(yq e '.server['$index'].host' $ServerPath)"
+	port="$(yq e '.server['$index'].port' $ServerPath)"
+	user="$(yq e '.server['$index'].user' $ServerPath)"
+	password="$(yq e '.server['$index'].pwd' $ServerPath)"
  
 	# ./login.sh $host $port $user $password
 	
